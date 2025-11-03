@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">MeowLiciousFood</string>
+
+    <string name="title_home">Home🐾</string>
+    <string name="title_menus">Menus🐾</string>
+    <string name="title_payments">Payments🐾</string>
+    <string name="title_cart">Cart🐾</string>
+
+    <string name="btn_register">Register</string>
+    <string name="btn_login">Login</string>
+
+    <string name="email">Email</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="pnumber">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="password">Password</string>
+    <string name="cpassword">Confirm Password</string>
+    <string name="uname">Username</string>
+    <string name="register_prompt">First Time? Register Now!</string>
+    <string name="freepik">Designed by <a href="https://www.freepik.com">Freepik</a>.</string>
+
+    <string name="addCart">Add to Cart Icon: <a href="https://www.freepik.com/author/optimagfx/icons">Optima GFX</a></string>
+    <string name="fabCart">Cart Blue Button Icon: <a href="https://www.freepik.com/author/-artist/icons">-Artist</a></string>
+    <string name="emptyCart">Empty Cart Display: <a href="https://www.freepik.com/author/cuputocreative/icons">Cuputocreative</a></string>
+    <string name="homeIcon">Home Nav Icon: <a href="https://www.freepik.com/author/freepik/icons">Freepik</a></string>
+    <string name="menusIcon">Menus Nav Icon: <a href="https://www.freepik.com/author/joninovianto77/icons">Joninovianto77</a></string>
+    <string name="paymentsIcon">Payments Nav Icon: <a href="https://www.freepik.com/author/sangpejuang/icons">Sangpejuang</a></string>
+    <string name="cartMinusIcon">Cart Minus Icon: <a href="https://www.freepik.com/author/freepik/icons">Freepik</a></string>
+    <string name="cartPlusIcon">Cart Plus Icon: <a href="https://www.freepik.com/author/dinosoftlab/icons">Dinosoftlab</a></string>
+    <string name="cartRemoveIcon">Cart Remove Icon: <a href="https://www.freepik.com/author/freepik/icons">Freepik</a></string>
+    <string name="menusHeartIcon">Menus Heart Icon: <a href="https://www.freepik.com/author/smashicons/icons">Smashicons</a></string>
+
+    <string name="cart_empty_message">Mrrow! Your Cart is empty!</string>
+</resources>

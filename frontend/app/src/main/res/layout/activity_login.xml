@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/username"
+        android:hint="@string/uname"
+	android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/password"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:text="@string/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+    	android:id="@+id/textRegister"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="@string/register_prompt"
+    	android:textColor="@color/linkColor"
+   	android:textStyle="bold"
+    	android:layout_gravity="center"
+    	android:paddingTop="16dp"
+    	android:clickable="true"
+    	android:focusable="true" />
+
+    <TextView
+    	android:id="@+id/textFreepik"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="@string/freepik"
+    	android:textColorLink="@color/linkColor"
+   	android:textStyle="bold"
+    	android:layout_gravity="center"
+    	android:paddingTop="8dp"
+    	android:linksClickable="true" />
+
+</LinearLayout>

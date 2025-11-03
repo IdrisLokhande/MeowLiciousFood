@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="6dp">
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+	<LinearLayout
+	    android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp">
+	
+        	<ImageView
+            	    android:id="@+id/imageDish"
+            	    android:layout_width="80dp"
+            	    android:layout_height="80dp"
+            	    android:scaleType="centerCrop"
+            	    android:background="@drawable/rounded_white"
+            	    android:clipToOutline="true" />
+
+		<ImageView
+    	    	    android:id="@+id/imageTrolley"
+    	    	    android:layout_width="50dp"
+    	    	    android:layout_height="32dp"
+                    android:layout_marginTop="12dp"
+   	    	    android:src="@drawable/ic_trolley"
+	            android:background="@drawable/rounded_white"
+    	    	    android:clipToOutline="true"
+    	    	    android:padding="4dp"
+                    android:clipToPadding="false"
+    	    	    android:clickable="true"
+    	    	    android:focusable="true" />
+          
+        </LinearLayout> 
+
+        <LinearLayout
+            android:id="@+id/infoLayout"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:background="@drawable/rounded_lavender">
+
+            <TextView
+                android:id="@+id/textDishName"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textDishDescription"
+                android:textSize="14sp"
+                android:textColor="@color/dark_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" 
+                android:maxLines="3"/>
+
+            <TextView
+                android:id="@+id/textDishPrice"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageFavorite"
+        android:layout_width="35dp"
+    	android:layout_height="35dp"
+        android:layout_margin="8dp"
+        android:layout_gravity="top|end"
+        android:translationX="8dp"
+        android:translationY="-6dp"
+    	android:src="@drawable/ic_favorite"
+        android:visibility="gone"
+        android:padding="2dp"/>
+  
+  </FrameLayout>
+
+</androidx.cardview.widget.CardView>

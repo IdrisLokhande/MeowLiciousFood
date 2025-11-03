@@ -1,0 +1,22 @@
+### FRONTEND ###
+.gradle/
+frontend/build/
+frontend/app/build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+local.properties
+testkey.jks
+.idea/
+*.iml
+
+### BACKEND ###
+node_modules/
+backend/scripts/
+backend/uploads/
+backend/.env
+
+### OS ####
+.DS_Store
+Thumbs.db
+
