@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.util.Log;
 import android.text.method.LinkMovementMethod;
+import android.text.TextWatcher;
+import android.text.Editable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,23 +34,37 @@ public class LoginActivity extends AppCompatActivity {
 	// Set up SessionManager
 	session = new SessionManager(LoginActivity.this);
 
-        // Inflate the layout using View Binding
+        // Inflate the layout
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         
-        binding.password.setTransformationMethod(new CustomPasswordTransformation());
- 
+	// Set custom password mask
+	EditText editPassword = binding.password;
+        editPassword.setTransformationMethod(new CustomPasswordTransformation());
+        editPassword.setOnFocusChangeListener((v, hasFocus) -> {
+		CustomPasswordTransformation newTm = new CustomPasswordTransformation();
+		editPassword.setTransformationMethod(newTm);
+		if(!hasFocus){
+			newTm.toggleLastCharMask(true);	
+		}else{
+			newTm.toggleLastCharMask(false);
+		}
+	});
+
 	// For Register
 	binding.textRegister.setOnClickListener(v -> {
     		Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
     		startActivity(intent);
 	});
 
-	// For Freepik Linking
+	// For Freepik URL Linking
 	binding.textFreepik.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Set up login button click listener
         binding.loginButton.setOnClickListener(v -> {
+	    binding.password.clearFocus();	    
+            binding.username.requestFocus();	
+	
             // Authentication logic in server.js
 	    String username = binding.username.getText().toString().trim();
     	    String password = binding.password.getText().toString().trim();

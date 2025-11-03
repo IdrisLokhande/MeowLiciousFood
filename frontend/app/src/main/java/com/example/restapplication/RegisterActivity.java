@@ -46,15 +46,37 @@ public class RegisterActivity extends AppCompatActivity {
     		ActivityCompat.requestPermissions(RegisterActivity.this,new String[]{Manifest.permission.SEND_SMS}, REQUEST_CODE_SMS);
 	}
 
-        EditText passwordField = findViewById(R.id.regPassword);
+        EditText passwordField = binding.regPassword;
         passwordField.setTransformationMethod(new CustomPasswordTransformation());
+	passwordField.setOnFocusChangeListener((v, hasFocus) -> {
+		CustomPasswordTransformation newTm = new CustomPasswordTransformation();
+		passwordField.setTransformationMethod(newTm);
+		if(!hasFocus){
+			newTm.toggleLastCharMask(true);	
+		}else{
+			newTm.toggleLastCharMask(false);
+		}
+	});
 
-        EditText cpasswordField = findViewById(R.id.conPassword);
+        EditText cpasswordField = binding.conPassword;
         cpasswordField.setTransformationMethod(new CustomPasswordTransformation());
+	cpasswordField.setOnFocusChangeListener((v, hasFocus) -> {
+		CustomPasswordTransformation newTm = new CustomPasswordTransformation();
+		cpasswordField.setTransformationMethod(newTm);
+		if(!hasFocus){
+			newTm.toggleLastCharMask(true);	
+		}else{
+			newTm.toggleLastCharMask(false);
+		}
+	});
 
         binding.buttonRegister.setOnClickListener(v -> {
-            String password = binding.regPassword.getText().toString().trim();
-            String confirmPassword = binding.conPassword.getText().toString().trim();
+	    passwordField.clearFocus();
+	    cpasswordField.clearFocus();
+	    binding.editEmail.requestFocus();
+	
+            String password = passwordField.getText().toString().trim();
+            String confirmPassword = cpasswordField.getText().toString().trim();
 
             if (!password.equals(confirmPassword)) {
                  Toast.makeText(this, "Mrrow! Passwords do not match!", Toast.LENGTH_SHORT).show();
