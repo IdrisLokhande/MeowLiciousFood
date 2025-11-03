@@ -44,13 +44,15 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.cardview.widget.CardView
-	xmlns:card_view="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/authors_card"
     	android:layout_width="0dp"
     	android:layout_height="250dp"
     	android:layout_margin="12dp"
-    	card_view:cardCornerRadius="20dp"
-    	card_view:cardElevation="6dp"
+	app:cardBackgroundColor="#000000"
+    	app:cardCornerRadius="20dp"
+    	app:cardElevation="6dp"
+	app:cardPreventCornerOverlap="false"
+	app:cardUseCompatPadding="true"
 	app:layout_constraintTop_toBottomOf="@id/empty_favourites"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +74,7 @@
         		android:id="@+id/text_authors_title"
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
-        		android:text="Attribution of the Image Asset Authors:"
+        		android:text="Attributions of Images:"
 			android:layout_marginBottom="8dp"
         		android:textSize="18sp"
         		android:textStyle="bold"/>
