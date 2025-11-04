@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.MotionEvent;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.restapplication.databinding.FragmentMenusBinding;
 import com.example.restapplication.ui.home.HomeViewModel;
 import com.example.restapplication.Refreshable;
@@ -62,11 +64,11 @@ public class MenusFragment extends Fragment implements Refreshable {
 	binding.recyclerMenus.setAdapter(menuAdapter);
 
         // Observe menu list
-        // Imagine getMenuList() [MediatorLiveData] as a radio station.
-        // The ViewModel is the reporter who decides what news (data) is playing.
-        // The Fragment is a radio listener.
-        // "Turn on the radio while this Fragment's view exists [getViewLifecycleOwner()].
-        // whenever the reporter changes the news, call my code with the new news."
+        // Imagine getMenuList() [MediatorLiveData] as a radio station
+        // The ViewModel is the reporter who decides what news (data) is playing
+        // The Fragment is a radio listener
+        // "Turn on the radio while this Fragment's view exists [getViewLifecycleOwner()]
+        // whenever the reporter changes the news, call my code with the new news"
         menusViewModel.getMenuList().observe(getViewLifecycleOwner(), items -> {
             Map<String, List<MenuItem>> groupedMap = new LinkedHashMap<>();
             for (MenuItem item : items) {

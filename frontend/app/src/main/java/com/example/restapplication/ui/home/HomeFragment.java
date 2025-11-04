@@ -2,6 +2,7 @@ package com.example.restapplication.ui.home;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class HomeFragment extends Fragment implements Refreshable{
 
     private FragmentHomeBinding binding;
     private HomeAdapter favoritesAdapter; // simple adapter for favourites
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private HomeViewModel homeViewModel;
     private boolean hasFav = false;
     private Runnable refreshCallback;
@@ -50,8 +51,7 @@ public class HomeFragment extends Fragment implements Refreshable{
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-	
+
 	homeViewModel.setSession(requireActivity());
 	homeViewModel.setHomeText(requireActivity()); // be careful
 
@@ -62,26 +62,23 @@ public class HomeFragment extends Fragment implements Refreshable{
 		textView.setText(welcomeText);
 	});
 
-	/*
-        // Judging you
-        binding.viewPagerCats.setAdapter(new CatSlideshowAdapter());
-        binding.viewPagerCats.setOffscreenPageLimit(3);
+        return binding.getRoot();
+    }
 
-        final Runnable runnable = new Runnable() {
-               int currentPage = 0;
+    @Override
+    public void refresh(Runnable onComplete){
+        homeViewModel.refresh();
+	this.refreshCallback = onComplete;
+    }
 
-               @Override
-               public void run() {
-               if (binding.viewPagerCats.getAdapter() != null) {
-                     int pageCount = binding.viewPagerCats.getAdapter().getItemCount();
-                     currentPage = (currentPage + 1) % pageCount;
-                     binding.viewPagerCats.setCurrentItem(currentPage, true);
-                     handler.postDelayed(this, 4000); // horizontal scroll every 4 seconds
-               }
-               } 
-        };
-        handler.postDelayed(runnable, 4000);
-	*/
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance){
+    	super.onViewCreated(view, savedInstance);
+
+	if(!hasFav){ // sync only once after login
+ 		homeViewModel.fetchFavorites();
+		hasFav = true;
+	}
      
         // RecyclerView setup
         binding.recyclerFavourites.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -115,24 +112,6 @@ public class HomeFragment extends Fragment implements Refreshable{
 		if(child instanceof LinearLayout){
 			((TextView)((LinearLayout) child).getChildAt(1)).setMovementMethod(LinkMovementMethod.getInstance());
 		}	
-	}
-
-        return root;
-    }
-
-    @Override
-    public void refresh(Runnable onComplete){
-        homeViewModel.refresh();
-	this.refreshCallback = onComplete;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance){
-    	super.onViewCreated(view, savedInstance);
-
-	if(!hasFav){ // sync only once after login
- 		homeViewModel.fetchFavorites();
-		hasFav = true;
 	}
     }
 

@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.ViewGroup;
+import android.view.MotionEvent;
 import android.util.Log;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding; 
     private SessionManager session; 
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,56 +70,6 @@ public class MainActivity extends AppCompatActivity {
     		}
 	});
 
-        // Cart
-        binding.navCart.setOnClickListener(v -> {
-		navController.navigate(R.id.cart_fragment); // navigate to cart fragment
-	});
-
-	// Swipe Refresh
-	SwipeRefreshLayout swipeRefresh = findViewById(R.id.swipeRefresh);
-	swipeRefresh.setOnRefreshListener(() -> {
-		Fragment navHostFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
-		Fragment current = navHostFrag.getChildFragmentManager().getPrimaryNavigationFragment();
-		Log.d("CurrentFragment", "ID: " + current.getClass().getSimpleName());
-		if(current instanceof Refreshable){
-			((Refreshable) current).refresh(() -> swipeRefresh.setRefreshing(false));
-		}else{
-			swipeRefresh.setRefreshing(false);
-		}
-		// Cutomizable further
-	});
-
-	swipeRefresh.setOnChildScrollUpCallback((parent, child) -> {
-		Fragment navHostFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
-		if(navHostFrag == null) return false;
-
-		Fragment current = navHostFrag.getChildFragmentManager().getPrimaryNavigationFragment();
-		if(current == null) return false;
-
-		View root = current.getView();
-		if(root == null) return true;
-
-		View svAuthors = root.findViewById(R.id.author_scroll);
-		if(svAuthors instanceof ScrollView) {return svAuthors.canScrollVertically(-1);}
-		
-		return false;
-	});
-
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // sets (<-) button
-        NavigationUI.setupWithNavController(binding.navView, navController);
-	
-	// To clean up janky UI
-	binding.navView.setOnItemSelectedListener(item -> {
-		Integer cur = navController.getCurrentDestination() != null ? navController.getCurrentDestination().getId() : null;
-		if(cur != null && cur == R.id.cart_fragment){
-			navController.popBackStack();
-		}
-		
-		// do not disrupt normal flow
-		boolean handled  = NavigationUI.onNavDestinationSelected(item, navController);
-		return handled;
-	});
-
 	if(!MenusCache.isPreloaded()){
 		APIService api = RetrofitClient.getInstance().create(APIService.class);
 		api.getFoodItems().enqueue(new Callback<List<FoodItemResponse>>() {
@@ -137,6 +90,51 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
     	}
+
+	swipeRefresh = binding.swipeRefresh;
+	Fragment navHostFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+	Fragment current = navHostFrag.getChildFragmentManager().getPrimaryNavigationFragment();
+
+        // Cart
+        binding.navCart.setOnClickListener(v -> {
+		navController.navigate(R.id.cart_fragment); // navigate to cart fragment
+	});
+
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // sets (<-) button
+        NavigationUI.setupWithNavController(binding.navView, navController);
+	
+	View root = current.getView();
+	View svAuthors = root.findViewById(R.id.author_scroll);
+
+	swipeRefresh.setOnChildScrollUpCallback((parent, child) -> {
+		if(root == null) return false;
+
+		if(svAuthors instanceof ScrollView) {return svAuthors.canScrollVertically(-1);}
+		
+		return false;
+	});
+
+	swipeRefresh.setOnRefreshListener(() -> {
+		// Log.d("CurrentFragment", "ID: " + current.getClass().getSimpleName());
+		if(current instanceof Refreshable){
+			((Refreshable) current).refresh(() -> swipeRefresh.setRefreshing(false));
+		}else{
+			swipeRefresh.setRefreshing(false);
+		}
+		// Cutomizable further
+	});
+
+	// To clean up janky UI
+	binding.navView.setOnItemSelectedListener(item -> {
+		Integer cur = navController.getCurrentDestination() != null ? navController.getCurrentDestination().getId() : null;
+		if(cur != null && cur == R.id.cart_fragment){
+			navController.popBackStack();
+		}
+		
+		// do not disrupt normal flow
+		boolean handled  = NavigationUI.onNavDestinationSelected(item, navController);
+		return handled;
+	});
     }
 
     @Override
