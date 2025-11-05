@@ -138,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 	@Override
-	public void onDestroy(){
+	protected void onDestroy(){
 		super.onDestroy();
 		binding = null;
 	}
