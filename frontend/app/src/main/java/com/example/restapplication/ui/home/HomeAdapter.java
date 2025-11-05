@@ -36,7 +36,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.FavViewHolder>
     @Override
     public FavViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_menu, parent, false); // inflate item_menu in Home Fragment
+                		.inflate(R.layout.item_menu, parent, false); // inflate item_menu in Home Fragment
         return new FavViewHolder(view);
     }
 
@@ -48,13 +48,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.FavViewHolder>
         holder.textDishDescription.setText(item.getDescription());
         holder.textDishPrice.setText(String.format(Locale.getDefault(), "₹%.2f", item.getPrice()));
         holder.imageDish.setImageBitmap(item.getImageRes());
-	holder.imageTrolley.setOnClickListener(v -> {
-           	 CartManager.addItem(item);
-		 Toast.makeText(holder.itemView.getContext(), item.getName() + " added to cart!", Toast.LENGTH_SHORT).show();
-  
-                 v.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(() ->
-                 	v.animate().scaleX(1f).scaleY(1f).setDuration(100)
-		 );
+		holder.imageTrolley.setOnClickListener(v -> {
+           	CartManager.addItem(item);
+			Toast.makeText(holder.itemView.getContext(), item.getName() + " added to cart!", Toast.LENGTH_SHORT).show();
+
+            v.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(() ->
+            	v.animate().scaleX(1f).scaleY(1f).setDuration(100)
+			); // enlarge then resume to normal, in 100 ms each
 	    });
 
         holder.imageFavorite.setVisibility(View.GONE);
@@ -69,7 +69,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.FavViewHolder>
     public boolean shouldApplyBottomOffset(int position){
     	return true;
     }
-
 
     static class FavViewHolder extends RecyclerView.ViewHolder {
         TextView textDishName, textDishDescription, textDishPrice;
