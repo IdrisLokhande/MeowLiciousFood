@@ -10,9 +10,13 @@ public class FoodItemResponse {
     private String foodId;
     @SerializedName("foodname")
     private String foodName;
+    @SerializedName("description")
     private String description;
+    @SerializedName("price")
     private double price;
+    @SerializedName("img")
     private String img;
+    @SerializedName("rname")
     private String rname;
 
     public String getFoodId() {
