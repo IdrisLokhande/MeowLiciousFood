@@ -42,38 +42,38 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-	if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+		if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
     		ActivityCompat.requestPermissions(RegisterActivity.this,new String[]{Manifest.permission.SEND_SMS}, REQUEST_CODE_SMS);
-	}
+		}
 
         EditText passwordField = binding.regPassword;
         passwordField.setTransformationMethod(new CustomPasswordTransformation());
-	passwordField.setOnFocusChangeListener((v, hasFocus) -> {
-		CustomPasswordTransformation newTm = new CustomPasswordTransformation();
-		passwordField.setTransformationMethod(newTm);
-		if(!hasFocus){
-			newTm.toggleLastCharMask(true);	
-		}else{
-			newTm.toggleLastCharMask(false);
-		}
-	});
+		passwordField.setOnFocusChangeListener((v, hasFocus) -> {
+			CustomPasswordTransformation newTm = new CustomPasswordTransformation();
+			passwordField.setTransformationMethod(newTm);
+			if(!hasFocus){
+				newTm.toggleLastCharMask(true);	
+			}else{
+				newTm.toggleLastCharMask(false);
+			}
+		});
 
         EditText cpasswordField = binding.conPassword;
         cpasswordField.setTransformationMethod(new CustomPasswordTransformation());
-	cpasswordField.setOnFocusChangeListener((v, hasFocus) -> {
-		CustomPasswordTransformation newTm = new CustomPasswordTransformation();
-		cpasswordField.setTransformationMethod(newTm);
-		if(!hasFocus){
-			newTm.toggleLastCharMask(true);	
-		}else{
-			newTm.toggleLastCharMask(false);
-		}
-	});
+		cpasswordField.setOnFocusChangeListener((v, hasFocus) -> {
+			CustomPasswordTransformation newTm = new CustomPasswordTransformation();
+			cpasswordField.setTransformationMethod(newTm);
+			if(!hasFocus){
+				newTm.toggleLastCharMask(true);	
+			}else{
+				newTm.toggleLastCharMask(false);
+			}
+		});
 
         binding.buttonRegister.setOnClickListener(v -> {
-	    passwordField.clearFocus();
-	    cpasswordField.clearFocus();
-	    binding.editEmail.requestFocus();
+	    	passwordField.clearFocus();
+	    	cpasswordField.clearFocus();
+	    	binding.editEmail.requestFocus();
 	
             String password = passwordField.getText().toString().trim();
             String confirmPassword = cpasswordField.getText().toString().trim();
@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                  Toast.makeText(this, "Mrrow! Passwords do not match!", Toast.LENGTH_SHORT).show();
                  return;
             }
-	    // Everything else handled in server.js
+	    	// Everything else handled in server.js
            
             email = binding.editEmail.getText().toString().trim();
             username = binding.regUsername.getText().toString().trim();
@@ -95,25 +95,24 @@ public class RegisterActivity extends AppCompatActivity {
             APIService api = RetrofitClient.getInstance().create(APIService.class);
 
             // Validate and save user data
-	    api.registerUser(request).enqueue(new Callback<LoRResponse>() {
-  
-            @Override
-            public void onResponse(Call<LoRResponse> call, Response<LoRResponse> response) {
+	    	api.registerUser(request).enqueue(new Callback<LoRResponse>() {
+            	@Override
+            	public void onResponse(Call<LoRResponse> call, Response<LoRResponse> response) {
                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                          sendSms(phone, "Meow! Thank you " + firstName + " " + lastName + " for registering on MeowLiciousFood!");
                          goToLogin();
-			 // below snippet in this block gives error mismatch
-			 // Toast.makeText(LoginActivity.class, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+					 	// below snippet in this block gives error mismatch
+			 			// Toast.makeText(LoginActivity.class, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                    } else if (response.body() != null){
                          Toast.makeText(RegisterActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                    }
-            }
+            	}
 
-            @Override
-            public void onFailure(Call<LoRResponse> call, Throwable t) {
+            	@Override
+            	public void onFailure(Call<LoRResponse> call, Throwable t) {
                    Toast.makeText(RegisterActivity.this, "Network Error!", Toast.LENGTH_SHORT).show();
                    Log.e("Retrofit", "onFailure: ", t);
-            }
+            	}
             });
         });
     }
@@ -133,8 +132,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void goToLogin(){
-	Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+		Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
     	startActivity(intent);
-	finish(); // Closes RegisterActivity so user can't go back to it
+		finish(); // Closes RegisterActivity so user can't go back to it
     }
+
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		binding = null;
+	}
 }
