@@ -6,16 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.MotionEvent;
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.restapplication.databinding.FragmentMenusBinding;
 import com.example.restapplication.ui.home.HomeViewModel;
 import com.example.restapplication.Refreshable;
 import com.example.restapplication.ui.LastItemBottomOffsetDecoration;
+import com.example.restapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +97,11 @@ public class MenusFragment extends Fragment implements Refreshable {
 		refreshCallback = null; // prevent double run
 	    }
         });
+
+	SwipeRefreshLayout swipeRefresh = requireActivity().findViewById(R.id.swipe_refresh);
+	swipeRefresh.setOnRefreshListener(() -> {
+		MenusFragment.this.refresh(() -> swipeRefresh.setRefreshing(false));
+	});
     }
 
     @Override

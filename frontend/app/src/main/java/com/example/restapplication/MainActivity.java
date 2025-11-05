@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.ViewGroup;
-import android.view.MotionEvent;
 import android.util.Log;
 import android.widget.ScrollView;
 
@@ -16,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.core.view.ViewCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding; 
     private SessionManager session; 
-    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 		});
     	}
 
-	swipeRefresh = binding.swipeRefresh;
 	Fragment navHostFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
 	Fragment current = navHostFrag.getChildFragmentManager().getPrimaryNavigationFragment();
 
@@ -102,27 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // sets (<-) button
         NavigationUI.setupWithNavController(binding.navView, navController);
-	
-	View root = current.getView();
-	View svAuthors = root.findViewById(R.id.author_scroll);
-
-	swipeRefresh.setOnChildScrollUpCallback((parent, child) -> {
-		if(root == null) return false;
-
-		if(svAuthors instanceof ScrollView) {return svAuthors.canScrollVertically(-1);}
-		
-		return false;
-	});
-
-	swipeRefresh.setOnRefreshListener(() -> {
-		// Log.d("CurrentFragment", "ID: " + current.getClass().getSimpleName());
-		if(current instanceof Refreshable){
-			((Refreshable) current).refresh(() -> swipeRefresh.setRefreshing(false));
-		}else{
-			swipeRefresh.setRefreshing(false);
-		}
-		// Cutomizable further
-	});
 
 	// To clean up janky UI
 	binding.navView.setOnItemSelectedListener(item -> {
