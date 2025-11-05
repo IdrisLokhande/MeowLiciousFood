@@ -43,21 +43,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+		// Inflate activity_main
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-	session = new SessionManager(this);
+		session = new SessionManager(this);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_menus, R.id.navigation_payments)
-                .build();
+														R.id.navigation_home, R.id.navigation_menus, R.id.navigation_payments
+                									  ).build();
         NavController navController = Navigation.findNavController(
     		findViewById(R.id.nav_host_fragment_activity_main)
-	);
+		);
 
-	navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+		navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
     		if (destination.getId() == R.id.cart_fragment) {
         		// Hide floating cart button
         		findViewById(R.id.navCart).setVisibility(View.GONE);
@@ -65,51 +66,51 @@ public class MainActivity extends AppCompatActivity {
         		// Show it again
         		findViewById(R.id.navCart).setVisibility(View.VISIBLE);
     		}
-	});
+		});
 
-	if(!MenusCache.isPreloaded()){
-		APIService api = RetrofitClient.getInstance().create(APIService.class);
-		api.getFoodItems().enqueue(new Callback<List<FoodItemResponse>>() {
-			@Override
-			public void onResponse(Call<List<FoodItemResponse>> call, Response<List<FoodItemResponse>> response){
+		if(!MenusCache.isPreloaded()){
+			APIService api = RetrofitClient.getInstance().create(APIService.class);
+			api.getFoodItems().enqueue(new Callback<List<FoodItemResponse>>() {
+				@Override
+				public void onResponse(Call<List<FoodItemResponse>> call, Response<List<FoodItemResponse>> response){
                         	if(response.isSuccessful() && response.body() != null){
                         		List<MenuItem> items = new ArrayList<>();
-					for(FoodItemResponse item : response.body()){
-						items.add(new MenuItem(item.getFoodId(), item.getFoodName(), item.getFoodDescription(), item.getFoodPrice(), item.getImg(), item.getRestaurantName()));
-					}	
+								for(FoodItemResponse item : response.body()){
+									items.add(new MenuItem(item.getFoodId(), item.getFoodName(), item.getFoodDescription(), item.getFoodPrice(), item.getImg(), item.getRestaurantName()));
+								}	
                         		MenusCache.setCache(items);		
+							}
 				}
-			}
 
-			@Override
-			public void onFailure(Call<List<FoodItemResponse>> call, Throwable t){
-				Log.e("MainActivity", "Failed to preload menus: " + t.getMessage());
-			}
-		});
+				@Override
+				public void onFailure(Call<List<FoodItemResponse>> call, Throwable t){
+					Log.e("MainActivity", "Failed to preload menus: " + t.getMessage());
+				}
+			});
     	}
 
-	Fragment navHostFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
-	Fragment current = navHostFrag.getChildFragmentManager().getPrimaryNavigationFragment();
+		Fragment navHostFrag = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+		Fragment current = navHostFrag.getChildFragmentManager().getPrimaryNavigationFragment();
 
         // Cart
         binding.navCart.setOnClickListener(v -> {
-		navController.navigate(R.id.cart_fragment); // navigate to cart fragment
-	});
+			navController.navigate(R.id.cart_fragment); // navigate to cart fragment
+		});
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // sets (<-) button
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-	// To clean up janky UI
-	binding.navView.setOnItemSelectedListener(item -> {
-		Integer cur = navController.getCurrentDestination() != null ? navController.getCurrentDestination().getId() : null;
-		if(cur != null && cur == R.id.cart_fragment){
-			navController.popBackStack();
-		}
+		// To clean up janky Cart UI
+		binding.navView.setOnItemSelectedListener(item -> {
+			Integer cur = navController.getCurrentDestination() != null ? navController.getCurrentDestination().getId() : null;
+			if(cur != null && cur == R.id.cart_fragment){
+				navController.popBackStack();
+			}
 		
-		// do not disrupt normal flow
-		boolean handled  = NavigationUI.onNavDestinationSelected(item, navController);
-		return handled;
-	});
+			// do not disrupt normal flow
+			boolean handled  = NavigationUI.onNavDestinationSelected(item, navController);
+			return handled;
+		});
     }
 
     @Override
@@ -127,17 +128,16 @@ public class MainActivity extends AppCompatActivity {
             .setMessage("Meow! Leaving already?")
             .setPositiveButton("Yes", (dialog, which) -> {
                 finishAffinity(); // Closes all activities by triggering onDestroy()
-            })
-            .setNegativeButton("No", (dialog, which) -> {
+            }).setNegativeButton("No", (dialog, which) -> {
                 dialog.dismiss(); // Close the dialog
-            })
-            .show();
+            }).show();
     }
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
-	session.clear();
-	session = null;
+		session.clear();
+		binding = null;
+		session = null;
     }
 }
