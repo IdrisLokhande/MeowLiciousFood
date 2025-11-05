@@ -19,8 +19,16 @@ public class OrderItemRequest{
 		this.subTotal = subTotal;
 	}
 
-	public String getOrderId(){ return orderId; }
-	public String getFoodId(){ return foodId; }
-	public int getQuantity(){ return quantity; }
-	public double getSubTotal(){ return subTotal; }
+	public String getOrderId(){
+		return orderId;
+	}
+	public String getFoodId(){
+		return foodId;
+	}
+	public int getQuantity(){
+		return quantity;
+	}
+	public double getSubTotal(){
+		return subTotal;
+	}
 }
