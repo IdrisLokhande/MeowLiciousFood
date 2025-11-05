@@ -14,38 +14,38 @@ public class CustomPasswordTransformation extends PasswordTransformationMethod {
     @Override
     public CharSequence getTransformation(CharSequence source, View view) {
         lastSequence = new PasswordCharSequence(source);
-	return lastSequence;
+		return lastSequence;
     }
 	
     public void toggleLastCharMask(boolean masked){
-	lastSequence.setMask(masked);
+		lastSequence.setMask(masked);
     }	
 
     private static class PasswordCharSequence implements CharSequence {
         private final CharSequence source;
-	private boolean isMasked;
+		private boolean isMasked;
 
         PasswordCharSequence(CharSequence source) {
             this.source = source;
         }
 
-	@Override
+		@Override
         public char charAt(int index) {
-	    return index == (source.length()-1) && !isMasked ? source.charAt(index) : MASK;
+	    	return index == (source.length()-1) && !isMasked ? source.charAt(index) : MASK;
         }
 
-	@Override
+		@Override
         public int length() {
             return source.length();
         }
 
-	@Override
+		@Override
         public CharSequence subSequence(int start, int end) {
             return source.subSequence(start, end);
         }
 
-	public void setMask(boolean isMasked){
-		this.isMasked = isMasked;
-	}
+		public void setMask(boolean isMasked){
+			this.isMasked = isMasked;
+		}
     }
 }
