@@ -10,14 +10,15 @@ public class OrderRequest {
     private int userId;
     @SerializedName("orderdate")
     private String orderDate;
+	@SerializedName("total")
     private double total;
     private List<OrderItemRequest> items;
 
     public OrderRequest(String orderId, int userId, String orderDate, double total, List <OrderItemRequest> items) {
-	this.orderId = orderId;
-	this.userId = userId;
-	this.orderDate = orderDate;
-	this.total = total;
-	this.items = items;       
+		this.orderId = orderId;
+		this.userId = userId;
+		this.orderDate = orderDate;
+		this.total = total;
+		this.items = items;       
     }
 }
