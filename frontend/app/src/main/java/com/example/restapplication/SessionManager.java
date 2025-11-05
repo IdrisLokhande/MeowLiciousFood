@@ -14,7 +14,7 @@ public class SessionManager{
 		prefs.edit().putString("username", username).putInt("userId", uid).apply(); 
 	}
 
-        public void clear(){
+    public void clear(){
 		prefs.edit().clear().apply(); 
 	}
 
