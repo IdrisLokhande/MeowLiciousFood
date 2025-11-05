@@ -14,6 +14,6 @@ public class LoRResponse {
     }
 
     public Integer getUserId() {
-	return uid;
+		return uid;
     }
 }
