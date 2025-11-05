@@ -1,3 +1,7 @@
+// ===========================================================================
+// NOT USED AT THE MOMENT. CAN BE REPLACED WITH OTHER PICTURES IF IMPLEMENTED.
+// ===========================================================================
+
 package com.example.restapplication.ui.home;
 
 import android.view.ViewGroup;
@@ -11,9 +15,10 @@ import com.example.restapplication.R;
 
 public class CatSlideshowAdapter extends RecyclerView.Adapter<CatSlideshowAdapter.CatViewHolder> {
     private final int[] catImages = {
-        R.drawable.judge_1,
-        R.drawable.judge_2,
-        R.drawable.judge_3
+        // R.drawable.judge_1,
+        // R.drawable.judge_2,
+        // R.drawable.judge_3
+        // and more...
     };
 
     @NonNull
