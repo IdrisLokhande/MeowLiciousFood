@@ -53,97 +53,97 @@ public class HomeFragment extends Fragment implements Refreshable{
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-	homeViewModel.setSession(requireActivity());
-	homeViewModel.setHomeText(requireActivity()); // be careful
-
-	if(!hasFav){ // sync only once after login
- 		homeViewModel.fetchFavorites();
-		hasFav = true;
-	}
-
         return binding.getRoot();
     }
 
     @Override
     public void refresh(Runnable onComplete){
         homeViewModel.refresh();
-	this.refreshCallback = onComplete;
+		this.refreshCallback = onComplete;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance){
     	super.onViewCreated(view, savedInstance);
 
-	// Welcome text
+		homeViewModel.setSession(requireActivity());
+		homeViewModel.setHomeText(requireActivity()); // be careful (due to dependency on inflation of activity_main, etc.)
+		
+		if(!hasFav){ // sync only once after login
+ 			homeViewModel.fetchFavorites();
+			hasFav = true;
+		}
+	
+		// Welcome text
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), text -> {	
-		String welcomeText = "Meow! Welcome back, " + text + "!";				
-		textView.setText(welcomeText);
-	});
+			String welcomeText = "Meow! Welcome back, " + text + "!";				
+			textView.setText(welcomeText);
+		});
 
-	// RecyclerView setup
+		// RecyclerView setup
         binding.recyclerFavourites.setLayoutManager(new LinearLayoutManager(getContext()));
         favoritesAdapter = new HomeAdapter(new ArrayList<>());
         binding.recyclerFavourites.setAdapter(favoritesAdapter);
 
         binding.recyclerFavourites.addItemDecoration(new LastItemBottomOffsetDecoration(requireContext(), 64));
 
-	// Observe favourites list from HomeViewModel
+		// Observe favourites list from HomeViewModel
         homeViewModel.getFavoriteItems().observe(getViewLifecycleOwner(), favourites -> {
             // Update adapter whenever favourites change
             if (favourites.isEmpty()) {
-                   binding.emptyFavourites.setVisibility(View.VISIBLE);
-		   binding.authorsCard.setVisibility(View.VISIBLE);
-                   binding.recyclerFavourites.setVisibility(View.GONE);
+                   	binding.emptyFavourites.setVisibility(View.VISIBLE);
+		  			binding.authorsCard.setVisibility(View.VISIBLE);
+                   	binding.recyclerFavourites.setVisibility(View.GONE);
             } else {
-                   binding.emptyFavourites.setVisibility(View.GONE);
-		   binding.authorsCard.setVisibility(View.GONE);
-                   binding.recyclerFavourites.setVisibility(View.VISIBLE);
-                   favoritesAdapter.setData(favourites);
+                   	binding.emptyFavourites.setVisibility(View.GONE);
+		   			binding.authorsCard.setVisibility(View.GONE);
+                   	binding.recyclerFavourites.setVisibility(View.VISIBLE);
+                   	favoritesAdapter.setData(favourites);
             }
 
-	    if(refreshCallback != null){
-		refreshCallback.run();
-		refreshCallback = null; // prevent double run
-	    }
+	    	if(refreshCallback != null){
+				refreshCallback.run();
+				refreshCallback = null; // prevent double run
+	    	}
         });
 
-	view.post(() -> { // to wait for activity_main to inflate properly, so this post gets queued in the meantime
-		if(binding == null) return;
+		view.post(() -> { // to wait for activity_main to inflate properly, so this post gets queued in the meantime
+			if(binding == null) return;
 
-		View svAuthors = binding.authorScroll;
-		SwipeRefreshLayout swipeRefresh = requireActivity().findViewById(R.id.swipe_refresh);
+			View svAuthors = binding.authorScroll;
+			SwipeRefreshLayout swipeRefresh = requireActivity().findViewById(R.id.swipe_refresh);
 		
-		svAuthors.setOnTouchListener((v,event) -> {
-			switch(event.getActionMasked()){
-				case MotionEvent.ACTION_DOWN:
-				case MotionEvent.ACTION_MOVE:
-					v.getParent().requestDisallowInterceptTouchEvent(true);
-					break;
-				case MotionEvent.ACTION_UP:
-				case MotionEvent.ACTION_CANCEL:
-					v.getParent().requestDisallowInterceptTouchEvent(false);
-					break;
+			svAuthors.setOnTouchListener((v,event) -> {
+				switch(event.getActionMasked()){
+					case MotionEvent.ACTION_DOWN:
+					case MotionEvent.ACTION_MOVE:
+						v.getParent().requestDisallowInterceptTouchEvent(true);
+						break;
+					case MotionEvent.ACTION_UP:
+					case MotionEvent.ACTION_CANCEL:
+						v.getParent().requestDisallowInterceptTouchEvent(false);
+						break;
+				}
+				return false;
+			});
+
+			swipeRefresh.setOnChildScrollUpCallback((parent, child) -> {
+				return svAuthors.canScrollVertically(-1);
+			});
+
+			swipeRefresh.setOnRefreshListener(() -> {
+				HomeFragment.this.refresh(() -> swipeRefresh.setRefreshing(false));
+				// Cutomizable further
+			});
+
+			for(int i = 1; i < binding.authors.getChildCount(); i++){
+				View child = binding.authors.getChildAt(i);
+				if(child instanceof LinearLayout){
+					((TextView)((LinearLayout) child).getChildAt(1)).setMovementMethod(LinkMovementMethod.getInstance());
+				}	
 			}
-			return false;
 		});
-
-		swipeRefresh.setOnChildScrollUpCallback((parent, child) -> {
-			return svAuthors.canScrollVertically(-1);
-		});
-
-		swipeRefresh.setOnRefreshListener(() -> {
-			HomeFragment.this.refresh(() -> swipeRefresh.setRefreshing(false));
-			// Cutomizable further
-		});
-
-		for(int i = 1; i < binding.authors.getChildCount(); i++){
-			View child = binding.authors.getChildAt(i);
-			if(child instanceof LinearLayout){
-				((TextView)((LinearLayout) child).getChildAt(1)).setMovementMethod(LinkMovementMethod.getInstance());
-			}	
-		}
-	});
     }
 
     @Override
