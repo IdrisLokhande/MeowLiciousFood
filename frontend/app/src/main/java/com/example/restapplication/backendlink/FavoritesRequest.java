@@ -10,7 +10,7 @@ public class FavoritesRequest {
     private String foodId;
 
     public FavoritesRequest(int userId, String foodId){
-	this.userId = userId;
-	this.foodId = foodId;
+		this.userId = userId;
+		this.foodId = foodId;
     } 
 }
