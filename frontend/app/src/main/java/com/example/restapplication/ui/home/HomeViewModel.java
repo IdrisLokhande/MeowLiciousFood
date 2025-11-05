@@ -40,22 +40,22 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void fetchFavorites(){
-	APIService api = RetrofitClient.getInstance().create(APIService.class);
-	api.getFavorites(session.getUserId()).enqueue(new Callback<List<FoodItemResponse>>(){
-		@Override
-		public void onResponse(Call<List<FoodItemResponse>> call, Response<List<FoodItemResponse>> response){
-			if(response.isSuccessful() && response.body() != null){
-				List<MenuItem> favs = response.body().stream().map(item -> new MenuItem(item.getFoodId(), item.getFoodName(), item.getFoodDescription(), item.getFoodPrice(), item.getImg(), item.getRestaurantName())).collect(Collectors.toList());
+		APIService api = RetrofitClient.getInstance().create(APIService.class);
+		api.getFavorites(session.getUserId()).enqueue(new Callback<List<FoodItemResponse>>(){
+			@Override
+			public void onResponse(Call<List<FoodItemResponse>> call, Response<List<FoodItemResponse>> response){
+				if(response.isSuccessful() && response.body() != null){
+					List<MenuItem> favs = response.body().stream().map(item -> new MenuItem(item.getFoodId(), item.getFoodName(), item.getFoodDescription(), item.getFoodPrice(), item.getImg(), item.getRestaurantName())).collect(Collectors.toList());
 
-				FavoritesStore.getInstance().setFavorites(favs);
+					FavoritesStore.getInstance().setFavorites(favs);
+				}
 			}
-		}
 
-		@Override
-		public void onFailure(Call<List<FoodItemResponse>> call, Throwable t){
-			Log.e("HomeViewModel", "Could not fetch favs", t);
-		}
-	});
+			@Override
+			public void onFailure(Call<List<FoodItemResponse>> call, Throwable t){
+				Log.e("HomeViewModel", "Could not fetch favs", t);
+			}
+		});
     }
 
     public void updateFavorites(MenuItem item) {
@@ -73,16 +73,22 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void setHomeText(Context context){
-   	mText.setValue(session.getUsername() != null ? session.getUsername() : "Friend");
+   		mText.setValue(session.getUsername() != null ? session.getUsername() : "Friend");
     }
 
     public void setSession(Context context){
-	if(context != null){
-		session = new SessionManager(context);
-	}
+		if(context != null){
+			session = new SessionManager(context);
+		}
     }
 
     public HomeViewModel() {
-	// nothing as of now
+		// nothing as of now
     }
+
+	@Override
+	protected void onCleared(){
+		super.onCleared();
+		session = null;
+	}
 }
