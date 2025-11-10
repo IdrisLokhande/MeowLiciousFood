@@ -31,28 +31,28 @@ public class MenusViewModel extends ViewModel {
 
     public MenusViewModel() {
         mediate.addSource(menuList, list -> applyFavorites(list));
-	List<MenuItem> items = MenusCache.getCache(); // preload
-	if(!items.isEmpty()){
-		menuList.setValue(items);
-	}	
+		List<MenuItem> items = MenusCache.getCache(); // preload
+		if(!items.isEmpty()){
+			menuList.setValue(items);
+		}	
     }
 
     private void applyFavorites(List<MenuItem> list){
         List<MenuItem> favs = FavoritesStore.getInstance().getFavorites().getValue();
-	if(list == null) return;
+		if(list == null) return;
 	
-	for(MenuItem item : list){
-		boolean isFav = favs!= null && favs.stream().anyMatch(f -> f.getId().equals(item.getId()));
-		if(item.getType() == MenuItem.TYPE_DISH) item.setFavourite(isFav);
-	}
+		for(MenuItem item : list){
+			boolean isFav = favs!= null && favs.stream().anyMatch(f -> f.getId().equals(item.getId()));
+			if(item.getType() == MenuItem.TYPE_DISH) item.setFavourite(isFav);
+		}
 	
-	mediate.setValue(new ArrayList<>(list));
+		mediate.setValue(new ArrayList<>(list));
     }
 
     public void refresh(){
         fetchMenuItems(); // async
     }
-    /*
+    /* Old Code
     private void loadMenuItems(MenuItem menuItem) {
         List<MenuItem> items = new ArrayList<>();
         items.add(new MenuItem("D1", "Tuna Temptation Plate", "Purrfectly Shredded Tuna with Creamy Dip", 299, R.drawable.juicy_tuna, "Billalaal Restaurant"));
@@ -73,9 +73,9 @@ public class MenusViewModel extends ViewModel {
     }
 
     private void fetchMenuItems(){
-	APIService api = RetrofitClient.getInstance().create(APIService.class);
+		APIService api = RetrofitClient.getInstance().create(APIService.class);
 
-	api.getFoodItems().enqueue(new Callback<List<FoodItemResponse>>() {
+		api.getFoodItems().enqueue(new Callback<List<FoodItemResponse>>() {
 		@Override
 		public void onResponse(Call<List<FoodItemResponse>> call, Response<List<FoodItemResponse>> response){
                         if(response.isSuccessful() && response.body() != null){
@@ -91,6 +91,6 @@ public class MenusViewModel extends ViewModel {
 		public void onFailure(Call<List<FoodItemResponse>> call, Throwable t){
 			Log.e("MenusViewModel", "Failed to fetch menus: " + t.getMessage());
 		}
-	});
+		});
     }
 }
