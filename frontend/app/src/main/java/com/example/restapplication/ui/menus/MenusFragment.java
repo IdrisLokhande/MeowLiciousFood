@@ -47,7 +47,7 @@ public class MenusFragment extends Fragment implements Refreshable {
     @Override
     public void refresh(Runnable onComplete){
     	menusViewModel.refresh();
-	this.refreshCallback = onComplete;
+		this.refreshCallback = onComplete;
     }
 
     @Override
@@ -63,15 +63,10 @@ public class MenusFragment extends Fragment implements Refreshable {
 
         binding.recyclerMenus.addItemDecoration(new LastItemBottomOffsetDecoration(requireContext(), 64));
 
-	menuAdapter = new MenuAdapter(requireActivity(), new ArrayList<>(), new LinkedHashMap<>(), menusViewModel);
-	binding.recyclerMenus.setAdapter(menuAdapter);
+		menuAdapter = new MenuAdapter(requireActivity(), new ArrayList<>(), new LinkedHashMap<>(), menusViewModel);
+		binding.recyclerMenus.setAdapter(menuAdapter);
 
         // Observe menu list
-        // Imagine getMenuList() [MediatorLiveData] as a radio station
-        // The ViewModel is the reporter who decides what news (data) is playing
-        // The Fragment is a radio listener
-        // "Turn on the radio while this Fragment's view exists [getViewLifecycleOwner()]
-        // whenever the reporter changes the news, call my code with the new news"
         menusViewModel.getMenuList().observe(getViewLifecycleOwner(), items -> {
             Map<String, List<MenuItem>> groupedMap = new LinkedHashMap<>();
             for (MenuItem item : items) {
@@ -92,16 +87,16 @@ public class MenusFragment extends Fragment implements Refreshable {
             menuAdapter.updateData(groupedItems, groupedMap);
             menuAdapter.setOnFavouriteToggleListener(item -> homeViewModel.updateFavorites(item));
             
-	    if(refreshCallback != null){
-		refreshCallback.run();
-		refreshCallback = null; // prevent double run
-	    }
+	    	if(refreshCallback != null){
+				refreshCallback.run();
+				refreshCallback = null; // prevent double run
+	    	}
         });
 
-	SwipeRefreshLayout swipeRefresh = requireActivity().findViewById(R.id.swipe_refresh);
-	swipeRefresh.setOnRefreshListener(() -> {
-		MenusFragment.this.refresh(() -> swipeRefresh.setRefreshing(false));
-	});
+		SwipeRefreshLayout swipeRefresh = requireActivity().findViewById(R.id.swipe_refresh);
+		swipeRefresh.setOnRefreshListener(() -> {
+			MenusFragment.this.refresh(() -> swipeRefresh.setRefreshing(false));
+		});
     }
 
     @Override
