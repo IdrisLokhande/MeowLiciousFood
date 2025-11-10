@@ -12,10 +12,18 @@ public class CartItem {
 	}    
 
 	// Getters
-	public MenuItem getMenuItem() {return menuItem;}
-	public int getQty() {return qty;}
+	public MenuItem getMenuItem() {
+		return menuItem;
+	}
+	public int getQty() {
+		return qty;
+	}
 
 	// Setters
-	public void incrQty() {qty++;}
-	public void decrQty() {if(qty > 1) qty++;}
+	public void incrQty() {
+		qty++;
+	}
+	public void decrQty() {
+		if(qty > 1) qty++;
+	}
 }
