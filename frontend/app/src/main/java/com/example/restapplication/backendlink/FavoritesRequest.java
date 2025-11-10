@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 public class FavoritesRequest {
     @SerializedName("uid")
     private int userId;
-
     @SerializedName("fid")
     private String foodId;
 
