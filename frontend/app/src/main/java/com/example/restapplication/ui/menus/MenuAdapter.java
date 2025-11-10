@@ -58,9 +58,9 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public MenuAdapter(Context context, List<MenuItem> menuList, Map<String, List<MenuItem>> groupedMap, MenusViewModel menusViewModel) {
         this.menuList = menuList;
         this.groupedMap = groupedMap;
-	this.context = context;
-	this.session = new SessionManager(context);
-	this.menusViewModel = menusViewModel;
+		this.context = context;
+		this.session = new SessionManager(context);
+		this.menusViewModel = menusViewModel;
     }
 
     public void setOnFavouriteToggleListener(OnFavouriteToggleListener listener) {
@@ -70,8 +70,8 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public void updateData(List<MenuItem> list, Map<String,List<MenuItem>> groupedMap){
     	this.groupedMap = groupedMap;
         this.menuList.clear();
-	this.menuList.addAll(list);
-	notifyDataSetChanged();
+		this.menuList.addAll(list);
+		notifyDataSetChanged(); // should try other alternatives instead of this
     }
 
     @NonNull
@@ -106,14 +106,14 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             ((MenuViewHolder) holder).binding.imageDish.setImageBitmap(item.getImageRes());
 
             // Add to Cart
-	    ((MenuViewHolder) holder).binding.imageTrolley.setOnClickListener(v -> {
-           	 CartManager.addItem(item);
-                 Toast.makeText(holder.itemView.getContext(), item.getName() + " added to cart!", Toast.LENGTH_SHORT).show();
+	    	((MenuViewHolder) holder).binding.imageTrolley.setOnClickListener(v -> {
+           		CartManager.addItem(item);
+                Toast.makeText(holder.itemView.getContext(), item.getName() + " added to cart!", Toast.LENGTH_SHORT).show();
   
-                 v.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(() ->
-                 	v.animate().scaleX(1f).scaleY(1f).setDuration(100)
-		 );
-	    });
+                v.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(() ->
+                	v.animate().scaleX(1f).scaleY(1f).setDuration(100)
+		 		);
+	    	});
 	
             // Show/Hide Favorite
             ((MenuViewHolder) holder).binding.imageFavorite.setVisibility(item.isFavourite() ? View.VISIBLE : View.GONE);
@@ -177,47 +177,47 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
        FavoritesRequest favRequest = new FavoritesRequest(session.getUserId(), item.getId());
 
        if (item.getType() == MenuItem.TYPE_DISH && !isFavorite) {	   
-	   api.recordFavorite(favRequest).enqueue(new Callback<FavoritesResponse>(){
-	   	@Override
-		public void onResponse(Call<FavoritesResponse> call, Response<FavoritesResponse> response){
-			if(response.isSuccessful() && response.body() != null && response.body().isSuccess()){
-				item.setFavourite(!item.isFavourite());
-           			notifyItemChanged(position);
+	   		api.recordFavorite(favRequest).enqueue(new Callback<FavoritesResponse>(){
+	   		@Override
+			public void onResponse(Call<FavoritesResponse> call, Response<FavoritesResponse> response){
+				if(response.isSuccessful() && response.body() != null && response.body().isSuccess()){
+					item.setFavourite(!item.isFavourite());
+           				notifyItemChanged(position);
           
-           			if(listener != null){
+           				if(listener != null){
                  			listener.onFavouriteToggled(item);
-           			}				
-			}else if(response.body() != null){
-				Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+           				}				
+				}else if(response.body() != null){
+					Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+				}
 			}
-		}
 	
-		@Override
-		public void onFailure(Call<FavoritesResponse> call, Throwable t){
-			Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
-		}
-	   });
+			@Override
+			public void onFailure(Call<FavoritesResponse> call, Throwable t){
+				Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+			}
+	   		});
        }else if (item.getType() == MenuItem.TYPE_DISH && isFavorite) {	   
-	   api.deleteFavorite(favRequest).enqueue(new Callback<FavoritesResponse>(){
-	   	@Override
-		public void onResponse(Call<FavoritesResponse> call, Response<FavoritesResponse> response){
-			if(response.isSuccessful() && response.body() != null && response.body().isSuccess()){
-				item.setFavourite(!item.isFavourite());
+	   		api.deleteFavorite(favRequest).enqueue(new Callback<FavoritesResponse>(){
+	   		@Override
+			public void onResponse(Call<FavoritesResponse> call, Response<FavoritesResponse> response){
+				if(response.isSuccessful() && response.body() != null && response.body().isSuccess()){
+					item.setFavourite(!item.isFavourite());
            			notifyItemChanged(position);
           
            			if(listener != null){
                  			listener.onFavouriteToggled(item);
            			}				
-			}else if(response.body() != null){
-				Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+				}else if(response.body() != null){
+					Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+				}
 			}
-		}
 	
-		@Override
-		public void onFailure(Call<FavoritesResponse> call, Throwable t){
-			Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
-		}
-	   });
+			@Override
+			public void onFailure(Call<FavoritesResponse> call, Throwable t){
+				Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+			}
+	   		});
        }
     }
 
