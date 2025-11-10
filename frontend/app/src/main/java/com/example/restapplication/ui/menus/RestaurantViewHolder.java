@@ -2,7 +2,6 @@ package com.example.restapplication.ui.menus;
 
 import android.view.View;
 import android.widget.TextView;
-import android.util.Log;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,8 +29,7 @@ class RestaurantViewHolder extends RecyclerView.ViewHolder {
         // When the header row is clicked, expand or collapse its dishes
         itemView.setOnClickListener(v -> {
              // Get the current adapter position of this header
-             // This is safer than using the 'position' passed earlier,
-             // because the list may have changed (items inserted/removed)
+             // This is safer because the list may have changed (items inserted/removed)
              int currentPos = getBindingAdapterPosition();
 
              // Only proceed if this ViewHolder is still valid in the adapter
@@ -39,7 +37,6 @@ class RestaurantViewHolder extends RecyclerView.ViewHolder {
                 // Ask the adapter to toggle the dishes for this restaurant
                 // The adapter handles inserting/removing the dish rows below this header
                 ((MenuAdapter) getBindingAdapter()).toggleDishes(currentPos, restaurantItem.getRestaurantName());
-		Log.d("HeaderClick", String.valueOf(restaurantItem.isExpanded()));
              }
         });
     }
