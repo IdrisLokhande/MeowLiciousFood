@@ -51,7 +51,7 @@ public class CartFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
-	session = new SessionManager(requireContext());
+		session = new SessionManager(requireContext());
         return binding.getRoot();
     }
 
@@ -90,31 +90,30 @@ public class CartFragment extends Fragment {
     	binding.checkoutButton.setOnClickListener(v -> {
         	int count = CartManager.getItemCount();
                 if(count == 0){
-     			Toast.makeText(requireContext(), getString(R.string.cart_empty_message), Toast.LENGTH_SHORT).show();
-                        return;
+     				Toast.makeText(requireContext(), getString(R.string.cart_empty_message), Toast.LENGTH_SHORT).show();
+                    return;
                 }
-		placeOrder();
-
-                // More workflow left
+			placeOrder();
+            // More workflow left
         });
     }
 
     private void placeOrder() {
     	String orderId = OrderUtils.generateOrderId();
-  	int userId = session.getUserId();
-	String orderDate = LocalDate.now().toString();
-	double total = CartManager.getTotal();
+  		int userId = session.getUserId();
+		String orderDate = LocalDate.now().toString();
+		double total = CartManager.getTotal();
 
-	List<OrderItemRequest> items = new ArrayList<>();
-	for(CartItem item : CartManager.getCartItems()){
-		double subtotal = item.getMenuItem().getPrice() * item.getQty();
-		items.add(new OrderItemRequest(orderId, item.getMenuItem().getId(), item.getQty(), subtotal));
-	}
+		List<OrderItemRequest> items = new ArrayList<>();
+		for(CartItem item : CartManager.getCartItems()){
+			double subtotal = item.getMenuItem().getPrice() * item.getQty();
+			items.add(new OrderItemRequest(orderId, item.getMenuItem().getId(), item.getQty(), subtotal));
+		}
 
-	OrderRequest orderRequest = new OrderRequest(orderId, userId, orderDate, total, items);
+		OrderRequest orderRequest = new OrderRequest(orderId, userId, orderDate, total, items); // Body class
 
-	APIService api = RetrofitClient.getInstance().create(APIService.class);
-	api.placeOrder(orderRequest).enqueue(new Callback<OrderResponse>() {
+		APIService api = RetrofitClient.getInstance().create(APIService.class);
+		api.placeOrder(orderRequest).enqueue(new Callback<OrderResponse>() {
 		@Override
 		public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response){
 			if(response.isSuccessful()){
@@ -128,28 +127,13 @@ public class CartFragment extends Fragment {
 			Log.e("Order", "Failed to place order: " + t.getMessage());
 			Toast.makeText(requireContext(), "Network Error!", Toast.LENGTH_SHORT).show();
 		}	
-
-	});
+		});
     }
-
-    /*
-    private List<OrderRequest.OrderItem> toOrderItems(List<CartItem> cartItems) {
-    	List<OrderRequest.OrderItem> orderItems = new ArrayList<>();
-    	for (CartItem item : cartItems) {
-        	orderItems.add(new OrderRequest.OrderItem(
-            		item.productId,
-            		item.quantity,
-            		item.price
-        	));
-    	}
-    	return orderItems;
-    }
-    */
 
     @Override
     public void onDestroyView() {
+		super.onDestroyView();
         CartManager.removeListener(cartListener);
         binding = null;
-        super.onDestroyView();
     }
 }
