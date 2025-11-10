@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-// import android.widget.ImageButton;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,23 +51,23 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         // minus button
         holder.minusButton.setOnClickListener(v -> {
-		if(ci.getQty() > 1){ // FIX THIS BAD CODE
-			CartManager.removeItem(mi);
-			for(int i = 0; i < ci.getQty() - 1; i++){
-				CartManager.addItem(mi);
+			if(ci.getQty() > 1){ // FIX THIS BAD CODE
+				CartManager.removeItem(mi);
+				for(int i = 0; i < ci.getQty() - 1; i++){
+					CartManager.addItem(mi);
+				}
+			}else{
+				CartManager.removeItem(mi);
 			}
-		}else{
-			CartManager.removeItem(mi);
-		}
-	});
+		});
 
         // remove button
         holder.removeButton.setOnClickListener(v -> CartManager.removeItem(mi));
 
         // misc.; listens for clicks anywhere in the entire cart row
         holder.itemView.setOnClickListener(v -> {
-   		// no-op for now
-	});
+   			// no-op for now
+		});
     }
 
     @Override
@@ -79,7 +79,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void setItems(@NonNull List<CartItem> newItems) {
         items.clear();
         items.addAll(newItems);
-        notifyDataSetChanged();
+        notifyDataSetChanged(); // should try other alternatives than this
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
