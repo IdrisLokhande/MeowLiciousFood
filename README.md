@@ -8,15 +8,17 @@
 
 **MeowLiciousFood** is a fun, educational full-stack application that combines a mobile Android frontend with a Node.js + MySQL backend.
 
-It explores:
+I explored:
 - MVVM architecture in Android (Java)
-- XML scripting (**AI assisted**, so apologies for any bad scripting if present)
+- XML scripting (**Majorly AI assisted**, so apologies for any bad scripting if present)
 - REST API consumption using Retrofit (https://github.com/square/retrofit)
-- Backend API design with Node.js and Express
-- Hashing with bcrypt, image compression with sharp
+- Backend API design with Node.js and Express; explored async, await
+- Hashing with bcrypt (default Salt Hashing Algorithm), image compression with sharp
 - Database persistence using MySQL add-on on Clever-Cloud
+- MySQL Joins, Nested Queries, Stored Procedures, Views and Triggers
 - Hosting on Vercel
-- **All coded in Notepad, with Powershell assist**
+
+**All coded in Notepad, with Powershell assist**
 
 The app and backend are still under development, roughly 50% complete with no Payments implementation, but demonstrate a working client-server setup for a food ordering experience.
 
