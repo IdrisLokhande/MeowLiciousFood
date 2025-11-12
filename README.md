@@ -12,6 +12,7 @@ I explored:
 - MVVM architecture in Android (Java)
 - XML scripting (**Majorly AI assisted**, so apologies for any bad scripting if present)
 - REST API consumption using Retrofit (https://github.com/square/retrofit)
+- Serialization/De-Serialization using google GSON
 - Backend API design with Node.js and Express; explored async, await
 - Hashing with bcrypt (default Salt Hashing Algorithm), image compression with sharp
 - Database persistence using MySQL add-on on Clever-Cloud
