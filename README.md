@@ -9,15 +9,19 @@
 **MeowLiciousFood** is a fun, educational full-stack application that combines a mobile Android frontend with a Node.js + MySQL backend.
 
 It explores:
-- MVVM architecture in Android (Java). **XML scripting is AI assisted**, so apologies for any bad scripting if present.
+- MVVM architecture in Android (Java)
+- XML scripting (**AI assisted**, so apologies for any bad scripting if present)
 - REST API consumption using Retrofit (https://github.com/square/retrofit)
 - Backend API design with Node.js and Express
+- Hashing with bcrypt, image compression with sharp
 - Database persistence using MySQL add-on on Clever-Cloud
+- Hosting on Vercel
 - **All coded in Notepad, with Powershell assist**
 
-The app and backend are still under development, roughly 50% complete with no payments logic, but already demonstrate a working client-server setup for a food ordering experience.
+The app and backend are still under development, roughly 50% complete with no Payments implementation, but demonstrate a working client-server setup for a food ordering experience.
 
-Hosting done at: **[meow-licious-food.vercel.app](https://meow-licious-food.vercel.app)**
+Hosting done at: **[meow-licious-food.vercel.app](https://meow-licious-food.vercel.app)** </br>
+UI icons/images: **[Freepik](https://freepik.com)**, and ChatGPT (for Menu Items)
 
 ## 🗂️ Repository Structure (Core Components)
 
