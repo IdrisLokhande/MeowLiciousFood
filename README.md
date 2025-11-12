@@ -2,7 +2,7 @@
 
 > A cat-themed food delivery learning project. Android (MVVM) app + Node.js + MySQL backend.  
 > Built for learning full-stack development, architecture patterns, and app-server integration.  
-> **Work in progress! Not yet production ready.**
+> **Work in progress! Not yet fully ready.**
 
 ## Overview
 
@@ -50,7 +50,7 @@ MeowLiciousFood/
 │   |           |   ├── RegisterActivity.java
 │   |           |   ├── Refreshable.java
 │   |           |   ├── SessionManager.java
-|   |           |   |
+│   |           |   |
 │   |           |   ├── ui/
 │   |           |   |   ├── FavoritesStore
 │   |           |   |   ├── LastItemBottomOffsetDecoration.java
@@ -93,7 +93,7 @@ MeowLiciousFood/
 │   |           |       ├── FoodItemResponse.java
 │   |           |       └── FavoritesResponse.java
 │   |           |
-│   │           └── res/
+│   |           └── res/
 |   |               ├── drawable/...
 |   |               ├── layout/...
 |   |               ├── menu/...
