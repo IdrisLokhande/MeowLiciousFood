@@ -30,17 +30,17 @@ MeowLiciousFood/
 │   └── db.js
 │
 ├── frontend/
-|   ├── build.gradle
-|   ├── gradle.properties
-|   ├── settings.gradle
-|   ├── gradlew
+│   ├── build.gradle
+│   ├── gradle.properties
+│   ├── settings.gradle
+│   ├── gradlew
 │   |
 │   ├── app/
 │   |   ├── build.gradle
 │   |   ├── lint-baseline.xml
 │   |   ├── proguard-rules.pro
 │   |   └── src/
-│   │       └── main/
+│   |       └── main/
 │   |           ├── AndroidManifest.xml
 │   |           |
 │   |           ├── java/com/example/restapplication
