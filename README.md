@@ -23,7 +23,7 @@ The app and backend are still under development, roughly 50% complete with no Pa
 Hosting done at: **[meow-licious-food.vercel.app](https://meow-licious-food.vercel.app)** </br>
 UI icons/images: **[Freepik](https://freepik.com)**, and ChatGPT (for Menu Items)
 
-## 🗂️ Repository Structure (Core Components)
+## Repository Structure (Core Components)
 
 ```text
 MeowLiciousFood/
