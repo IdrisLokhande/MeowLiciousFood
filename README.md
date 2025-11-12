@@ -35,10 +35,10 @@ MeowLiciousFood/
 |   ├── settings.gradle
 |   ├── gradlew
 │   |
-│   ├── app/   
+│   ├── app/
 │   |   ├── build.gradle
-|   |   ├── lint-baseline.xml
-|   |   ├── proguard-rules.pro
+│   |   ├── lint-baseline.xml
+│   |   ├── proguard-rules.pro
 │   |   └── src/
 │   │       └── main/
 │   |           ├── AndroidManifest.xml
@@ -105,5 +105,5 @@ MeowLiciousFood/
 │   └── gradle/...
 │
 ├── LICENSE
-└── README.md
+└── README.md   
 ```
