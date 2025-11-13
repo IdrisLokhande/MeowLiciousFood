@@ -2,7 +2,15 @@
 
 > A cat-themed food delivery learning project. Android (MVVM) app + Node.js + MySQL backend.  
 > Built for learning full-stack development, architecture patterns, and app-server integration.  
-> **Work in progress! Not yet fully ready.**
+> **Work in progress! Not yet fully ready.** </br>
+
+## Showcase
+
+![Register Screen](showcase/showcase1.jpg)
+![Login Screen](showcase/showcase2.jpg)
+![Home Screen](showcase/showcase3.jpg)
+![Menus Screen](showcase/showcase4.jpg)
+![Cart Screen](showcase/showcase5.jpg)
 
 ## Overview
 
@@ -24,7 +32,8 @@ I explored:
 The app and backend are still under development, roughly 50% complete with no Payments implementation, but demonstrate a working client-server setup for a food ordering experience.
 
 Hosting done at: **[meow-licious-food.vercel.app](https://meow-licious-food.vercel.app)** </br>
-UI icons/images: **[Freepik](https://freepik.com)**, and ChatGPT (for Menu Items)
+UI icons/images: **[Freepik](https://freepik.com)**, and **ChatGPT** (for Menu Items) </br>
+Attribution to icons/images authors on Freepik: **Optima GFX**, **~Artist**, **CuputoCreative**, **Freepik**, **Joninovianto77**, **Sangpejuang**, **Dinosoftlab**, **Smashicons** 
 
 ## Repository Structure (Core Components)
 
