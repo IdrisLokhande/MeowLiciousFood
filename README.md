@@ -22,7 +22,7 @@ I explored:
 - REST API consumption using Retrofit (https://github.com/square/retrofit)
 - Serialization/De-Serialization using google GSON
 - Backend API design with Node.js and Express; explored async, await
-- Hashing with bcrypt (default Salt Hashing Algorithm), image compression with sharp
+- Hashing with bcrypt (default Salted Hashing), image compression with sharp
 - Database persistence using MySQL add-on on Clever-Cloud
 - MySQL Joins, Nested Queries, Stored Procedures, Views, etc.
 - Hosting on Vercel
