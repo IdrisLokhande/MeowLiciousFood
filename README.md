@@ -24,7 +24,7 @@ I explored:
 - Backend API design with Node.js and Express; explored async, await
 - Hashing with bcrypt (default Salt Hashing Algorithm), image compression with sharp
 - Database persistence using MySQL add-on on Clever-Cloud
-- MySQL Joins, Nested Queries, Stored Procedures, Views and Triggers
+- MySQL Joins, Nested Queries, Stored Procedures, Views, etc.
 - Hosting on Vercel
 
 **All coded in Notepad, with Powershell assist**
