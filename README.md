@@ -6,11 +6,13 @@
 
 ## Showcase
 
-![Register Screen](showcase/showcase1.jpg)
-![Login Screen](showcase/showcase2.jpg)
-![Home Screen](showcase/showcase3.jpg)
-![Menus Screen](showcase/showcase4.jpg)
-![Cart Screen](showcase/showcase5.jpg)
+<p>
+  <img src="showcase/showcase1.jpg" alt="Register Screen" width="180">
+  <img src="showcase/showcase2.jpg" alt="Login Screen" width="180">
+  <img src="showcase/showcase3.jpg" alt="Home Screen" width="180">
+  <img src="showcase/showcase4.jpg" alt="Menus Screen" width="180">
+  <img src="showcase/showcase5.jpg" alt="Cart Screen" width="180">
+</p>
 
 ## Overview
 
@@ -18,7 +20,7 @@
 
 I explored:
 - MVVM architecture in Android (Java)
-- XML scripting (**Majorly AI assisted**, so apologies for any bad scripting if present)
+- XML scripting (**this part is AI assisted**, so apologies for any bad scripting if present)
 - REST API consumption using Retrofit (https://github.com/square/retrofit)
 - Serialization/De-Serialization using google GSON
 - Backend API design with Node.js and Express; explored async, await
