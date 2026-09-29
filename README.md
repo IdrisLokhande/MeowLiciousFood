@@ -31,7 +31,7 @@ I explored:
 
 **All coded in Notepad, with Powershell assist**
 
-The app and backend are still under development, roughly 50% complete with no Payments implementation, but demonstrate a working client-server setup for a food ordering experience.
+The app and backend are still under development, roughly 75% complete with no Payments implementation, but demonstrate a working client-server setup for a food ordering experience.
 
 Hosting done at: **[meow-licious-food.vercel.app](https://meow-licious-food.vercel.app)** </br>
 UI icons/images: **[Freepik](https://freepik.com)**, and **ChatGPT** (for Menu Items) </br>
